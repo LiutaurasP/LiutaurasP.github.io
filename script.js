@@ -1,55 +1,45 @@
 
-let partsByBudget = {
-    1000: {
-        cpu: ["Ryzen 5 5600", "https://example.com/ryzen5600"],
-        gpu: ["RX 6700 XT", "https://example.com/rx6700xt"],
-        ram: ["16GB DDR4", "https://example.com/16gbddr4"],
-        storage: ["1TB SSD", "https://example.com/1tbssd"]
-    },
-    2000: {
-        cpu: ["Ryzen 7 7700X", "https://example.com/ryzen7700x"],
-        gpu: ["RX 7900 XT", "https://example.com/rx7900xt"],
-        ram: ["32GB DDR5", "https://example.com/32gbddr5"],
-        storage: ["2TB NVMe SSD", "https://example.com/2tbssd"]
-    },
-    4000: {
-        cpu: ["Threadripper 7980X", "https://example.com/threadripper"],
-        gpu: ["RTX 4090", "https://example.com/rtx4090"],
-        ram: ["64GB DDR5 RGB", "https://example.com/64gbddr5"],
-        storage: ["4TB Gen5 SSD", "https://example.com/4tbssd"]
-    }
-};
-
-function setMode(mode) {
-    document.getElementById("build-section").style.display = mode === 'build' ? 'block' : 'none';
-    document.getElementById("upgrade-section").style.display = mode === 'upgrade' ? 'block' : 'none';
-}
-
 function updateBudgetLabel(value) {
-    document.getElementById("budgetLabel").textContent = `€${value}`;
-    document.getElementById("richText").textContent = value >= 4000 ? "💸 Oh so u rich huh?" : "";
+    document.getElementById('budgetLabel').textContent = `€${value}`;
+    const richComment = document.getElementById('richComment');
+    richComment.textContent = value >= 4000 ? "💸 Oh so u rich huh?" : "";
+    generateRecommendations(value);
 }
 
-function generateBuild() {
-    let budget = parseInt(document.getElementById("budgetSlider").value);
-    let key = budget >= 4000 ? 4000 : budget >= 2000 ? 2000 : 1000;
-    let parts = partsByBudget[key];
-
-    let resultHtml = `<ul>`;
-    for (let [type, [label, link]] of Object.entries(parts)) {
-        resultHtml += `<li>${type.toUpperCase()}: <a href="${link}" target="_blank">${label}</a></li>`;
-    }
-    resultHtml += `</ul>`;
-    document.getElementById("buildResult").innerHTML = resultHtml;
+function generateRecommendations(budget) {
+    const recommendations = document.getElementById('recommendations');
+    recommendations.innerHTML = budget < 700 ? "Entry-level: Ryzen 5 5500, GTX 1650" :
+                              budget < 1200 ? "Mid-range: Ryzen 5 7600, RTX 4060" :
+                              budget < 2000 ? "High-end: Ryzen 7 7700X, RX 7800 XT" :
+                              "Enthusiast: Ryzen 9 7950X3D, RTX 4090";
 }
 
-function suggestUpgrade() {
-    let selected = document.getElementById("partSelect").value;
-    let upgrade = {
-        cpu: ["Ryzen 9 7950X", "https://example.com/ryzen7950x"],
-        gpu: ["RX 7900 XTX", "https://example.com/rx7900xtx"],
-        ram: ["32GB DDR5", "https://example.com/32gbddr5"],
-        storage: ["2TB NVMe", "https://example.com/2tbssd"]
-    }[selected];
-    document.getElementById("upgradeResult").innerHTML = `Recommended: <a href="${upgrade[1]}" target="_blank">${upgrade[0]}</a>`;
+function showCurrentBuild() {
+    const currentBuild = document.getElementById('currentBuild');
+    currentBuild.innerHTML = `
+        <h3>Current PC:</h3>
+        <ul>
+            <li>CPU: Ryzen 7 7700</li>
+            <li>GPU: RX 7800 XT</li>
+            <li>RAM: 32GB DDR5</li>
+            <li>SSD: 1TB NVMe</li>
+            <li>PSU: 650W Gold</li>
+        </ul>
+    `;
+    currentBuild.classList.remove('hidden');
+    showUpgradeSuggestions();
+}
+
+function showUpgradeSuggestions() {
+    const suggestions = document.getElementById('upgradeSuggestions');
+    suggestions.innerHTML = `
+        <h3>Suggested Upgrades:</h3>
+        <ul>
+            <li>CPU → Ryzen 9 7950X3D (⚡ +20% Performance)</li>
+            <li>GPU → RTX 4090 (🚀 +40% Performance)</li>
+            <li>RAM → 64GB DDR5 (🧠 +10% Efficiency)</li>
+            <li>SSD → 2TB Gen4 NVMe (📁 +5% Speed)</li>
+        </ul>
+    `;
+    suggestions.classList.remove('hidden');
 }
