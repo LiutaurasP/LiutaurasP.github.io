@@ -3,46 +3,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC Builder Helper</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>🖥️ PC Builder Helper</h1>
-        <p>Smart, adaptive, dark-mode PC configuration tool</p>
-    </header>
+    <div class="container">
+        <h1>PC Builder Helper</h1>
+        <div class="mode-select">
+            <button onclick="setMode('build')">🛠️ Build New</button>
+            <button onclick="setMode('upgrade')">⚙️ Upgrade</button>
+        </div>
 
-    <section id="mode">
-        <button onclick="toggleMode()">🔄 Build New PC</button>
-        <button onclick="toggleUpgrade()">🔧 Upgrade Existing PC</button>
-    </section>
+        <div id="build-section">
+            <h2>Set Your Budget 💸</h2>
+            <input type="range" min="200" max="4000" value="1000" class="slider" id="budgetSlider" oninput="updateBudgetLabel(this.value)">
+            <span id="budgetLabel">€1000</span>
+            <p id="richText"></p>
 
-    <section id="filters">
-        <h2>🛠️ Filters</h2>
-        <label for="budget">Max Budget (€):</label>
-        <input type="number" id="budget" name="budget" min="100" max="10000">
+            <button onclick="generateBuild()">Generate Build</button>
+            <div id="buildResult"></div>
+        </div>
 
-        <label for="usage">Purpose:</label>
-        <select id="usage">
-            <option value="gaming">Gaming</option>
-            <option value="editing">Video Editing</option>
-            <option value="browsing">Basic Browsing</option>
-            <option value="ai">AI & Machine Learning</option>
-        </select>
+        <div id="upgrade-section" style="display:none;">
+            <h2>Select Existing Part to Upgrade 🔁</h2>
+            <select id="partSelect">
+                <option value="cpu">CPU</option>
+                <option value="gpu">GPU</option>
+                <option value="ram">RAM</option>
+                <option value="storage">Storage</option>
+            </select>
+            <button onclick="suggestUpgrade()">Suggest Upgrade</button>
+            <div id="upgradeResult"></div>
+        </div>
 
-        <button onclick="applyFilters()">Apply Filters</button>
-    </section>
-
-    <section id="suggestions">
-        <h2>💡 Suggestions</h2>
-        <div id="suggestionList"></div>
-    </section>
-
-    <footer>
-        <p>Built with love for the HCI resit ❤️</p>
-    </footer>
-
-    <script src="js/script.js"></script>
+        <div id="peripherals">
+            <h2>This Would Go Great With Your Setup 👌</h2>
+            <ul>
+                <li>🎧 HyperX Cloud II</li>
+                <li>⌨️ Logitech G Pro Keyboard</li>
+                <li>🖱️ Glorious Model O Mouse</li>
+                <li>📺 AOC 144Hz Monitor</li>
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
