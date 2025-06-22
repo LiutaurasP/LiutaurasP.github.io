@@ -1,28 +1,103 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC Builder Helper</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PC Builder Helper</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #262626;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    header h1 {
+      margin: 0;
+      color: #00ffc8;
+    }
+    nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: #90caf9;
+      background: #2a2a2a;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #3a3a3a;
+    }
+    main {
+      padding: 2rem;
+      text-align: center;
+    }
+    button {
+      margin: 1rem;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #00ffc8;
+      color: #000;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #00e6b8;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <h1>PC Builder Helper</h1>
-        <p>Select your budget:</p>
-        <input type="range" id="budgetSlider" min="300" max="4000" value="1000" step="100" oninput="updateBudgetLabel(this.value)">
-        <span id="budgetLabel">€1000</span>
-        <div id="richComment"></div>
-        
-        <h2>Recommendations</h2>
-        <div id="recommendations"></div>
+<body class="dark">
+  <header>
+    <h1>💻 PC Builder Helper</h1>
+    <nav>
+      <a href="build.html">Start Build</a>
+      <a href="upgrade.html">Upgrade My PC</a>
+      <a href="tools.html">Tools & Recommendations</a>
+    </nav>
+  </header>
+  <main>
+    <h2>What do you want to do?</h2>
+    <button onclick="handleChoice('upgrade')">Upgrade My Existing PC</button>
+    <button onclick="nextStep()">I Want to Build a New Rig</button>
 
-        <h2>Upgrade PC</h2>
-        <button onclick="showCurrentBuild()">Get My Current Build Details</button>
-        <div id="currentBuild" class="hidden"></div>
-        <div id="upgradeSuggestions" class="hidden"></div>
+    <div id="usecaseSection" class="hidden">
+      <h3>What will you use your new PC for?</h3>
+      <button onclick="handleUseCase('gaming')">Gaming</button>
+      <button onclick="handleUseCase('streaming')">Streaming</button>
+      <button onclick="handleUseCase('work')">Work / Study</button>
+      <button onclick="handleUseCase('editing')">Video Editing</button>
     </div>
-    <script src="script.js"></script>
+  </main>
+
+  <script>
+    function handleChoice(choice) {
+      if (choice === 'upgrade') {
+        window.location.href = 'upgrade.html';
+      }
+    }
+
+    function nextStep() {
+      document.getElementById('usecaseSection').classList.remove('hidden');
+    }
+
+    function handleUseCase(type) {
+      sessionStorage.setItem('usecase', type);
+      window.location.href = 'build.html';
+    }
+  </script>
 </body>
 </html>

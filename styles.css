@@ -1,0 +1,70 @@
+body.dark {
+  background-color: #121212;
+  color: #eee;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background-color: #1f1f1f;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+header h1 {
+  margin: 0;
+  color: #00ffc8;
+}
+nav a {
+  margin: 0 0.75rem;
+  color: #90caf9;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+nav a:hover {
+  background-color: #333;
+}
+main {
+  padding: 2rem;
+}
+input[type=range] {
+  width: 100%;
+  margin: 1rem 0;
+}
+#partList, #upgradeList, #currentBuild, .intro, section {
+  background-color: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.bar {
+  background-color: #333;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 5px 0;
+}
+.bar-inner {
+  height: 20px;
+  background: linear-gradient(90deg, #00ffc8, #1e90ff);
+  width: 0;
+  transition: width 0.5s ease;
+}
+button {
+  background-color: #00ffc8;
+  color: #121212;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+button:hover {
+  background-color: #00e6b8;
+}

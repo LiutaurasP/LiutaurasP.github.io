@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start Build - PC Builder Helper</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .button-buy {
+      display: inline-block;
+      background-color: #00ffc8;
+      color: black;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .button-buy:hover {
+      background-color: #00dab0;
+    }
+  </style>
+</head>
+<body class="dark">
+  <header>
+    <h1 id="usecaseTitle">What will you use your PC for?</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="upgrade.html">Upgrade</a>
+      <a href="tools.html">Tools</a>
+    </nav>
+  </header>
+  <main>
+    <section class="intro">
+      <form id="questionnaire">
+        <label><input type="radio" name="usecase" value="gaming" checked> Gaming</label><br>
+        <label><input type="radio" name="usecase" value="editing"> Video Editing</label><br>
+        <label><input type="radio" name="usecase" value="office"> Office/School</label><br>
+        <label><input type="radio" name="usecase" value="streaming"> Streaming + Gaming</label><br>
+        <button type="submit">Continue</button>
+      </form>
+    </section>
+
+    <div id="buildPlanner" style="display:none;">
+      <label for="budgetRange">Select your budget: €<span id="budgetLabel">200</span></label>
+      <input type="range" id="budgetRange" min="200" max="4000" step="50" value="200">
+      <p id="richText"></p>
+
+      <div id="partList"></div>
+      <div id="compatibilityCheck"></div>
+      <div id="performanceEstimate"></div>
+
+      <button onclick="addToCompare()">Add to Compare</button>
+      <button onclick="showComparison()">View Comparison</button>
+      <div id="comparison"></div>
+    </div>
+  </main>
+  <script>
+    const questionnaire = document.getElementById('questionnaire');
+    const buildPlanner = document.getElementById('buildPlanner');
+    const budgetSlider = document.getElementById("budgetRange");
+    const label = document.getElementById("budgetLabel");
+    const partList = document.getElementById("partList");
+    const richText = document.getElementById("richText");
+    const compatibilityCheck = document.getElementById("compatibilityCheck");
+    const performanceEstimate = document.getElementById("performanceEstimate");
+    const comparisonBox = document.getElementById("comparison");
+    const usecaseTitle = document.getElementById("usecaseTitle");
+
+    let userUseCase = "gaming";
+    let currentBuild = [];
+    let compareBuilds = [];
+
+    questionnaire.addEventListener('submit', function(e) {
+      e.preventDefault();
+      userUseCase = document.querySelector('input[name="usecase"]:checked').value;
+      
+      const labelMap = {
+        gaming: "Let's build your Gaming PC!",
+        editing: "Let's build your Editing PC!",
+        office: "Let's build your Office PC!",
+        streaming: "Let's build your Streaming PC!"
+      };
+      usecaseTitle.textContent = labelMap[userUseCase] || "Let's build your PC!";
+
+      questionnaire.style.display = 'none';
+      buildPlanner.style.display = 'block';
+      generateParts(budgetSlider.value);
+    });
+
+    budgetSlider.addEventListener("input", () => {
+      const value = budgetSlider.value;
+      label.textContent = value;
+      richText.textContent = value >= 4000 ? "oh so u rich huh? 💸" : "";
+      generateParts(value);
+    });
+
+    function generateParts(budget) {
+      currentBuild = [];
+      let parts = [];
+      let cpu, gpu;
+
+      if (budget < 500) cpu = "Intel i3 12100F";
+      else if (budget < 1000) cpu = "Ryzen 5 5600";
+      else if (budget < 2000) cpu = "Ryzen 7 7700";
+      else cpu = "Ryzen 9 7900X";
+
+      if (userUseCase === "office") gpu = "Integrated Graphics";
+      else if (budget < 700) gpu = "GTX 1650";
+      else if (budget < 1300) gpu = "RX 6700 XT";
+      else if (budget < 2000) gpu = "RX 7800 XT";
+      else gpu = "RTX 4080";
+
+      parts.push({ category: "CPU", name: cpu });
+      parts.push({ category: "GPU", name: gpu });
+      parts.push({ category: "RAM", name: budget < 1000 ? "16GB DDR4" : "32GB DDR5" });
+      parts.push({ category: "Storage", name: budget < 1000 ? "500GB SSD" : "1TB NVMe SSD" });
+      parts.push({ category: "Motherboard", name: budget < 1000 ? "B450" : "B650 or Z690" });
+      parts.push({ category: "PSU", name: budget < 1000 ? "550W Bronze" : "750W Gold" });
+      parts.push({ category: "Case", name: "Mid Tower ATX Case" });
+
+      currentBuild = parts;
+
+      let issues = [];
+      if (parts.find(p => p.name.includes("DDR4")) && parts.find(p => p.name.includes("B650"))) {
+        issues.push("⚠️ DDR4 RAM is not compatible with B650 motherboard (DDR5-only). Consider upgrading RAM.");
+      }
+
+      partList.innerHTML = parts.map(p => 
+        `<p><b>${p.category}:</b> ${p.name} - 
+        <a href='#' class='button-buy'>cheapest option</a></p>`).join("");
+
+      compatibilityCheck.innerHTML = issues.length ? `<div style='color: #ff8080;'>${issues.join("<br>")}</div>` : "✅ All parts are compatible!";
+
+      let fps = budget < 700 ? 60 : budget < 1200 ? 120 : budget < 2000 ? 240 : 350;
+      performanceEstimate.innerHTML = `<p><b>Estimated Performance:</b> ~${fps} FPS in CS2 on High Settings</p>`;
+    }
+
+    function addToCompare() {
+      if (currentBuild.length > 0) {
+        compareBuilds.push([...currentBuild]);
+        alert("Build added to comparison!");
+      }
+    }
+
+    function showComparison() {
+      if (compareBuilds.length < 2) {
+        comparisonBox.innerHTML = "<p>Add at least 2 builds to compare.</p>";
+        return;
+      }
+      let html = "<table><tr><th>Part</th><th>Build 1</th><th>Build 2</th></tr>";
+      for (let i = 0; i < compareBuilds[0].length; i++) {
+        html += `<tr><td>${compareBuilds[0][i].category}</td><td>${compareBuilds[0][i].name}</td><td>${compareBuilds[1][i].name}</td></tr>`;
+      }
+      html += "</table>";
+      comparisonBox.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
