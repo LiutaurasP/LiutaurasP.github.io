@@ -17,33 +17,18 @@
       background: #262626;
       padding: 1rem 2rem;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     }
     header h1 {
       margin: 0;
       color: #00ffc8;
-    }
-    nav a {
-      margin-left: 1rem;
-      text-decoration: none;
-      color: #90caf9;
-      background: #2a2a2a;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      transition: background 0.3s;
-    }
-    nav a:hover {
-      background: #3a3a3a;
+      font-size: 1.5rem;
     }
     main {
       padding: 2rem;
       text-align: center;
-    }
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
     }
     button {
       margin: 1rem;
@@ -66,42 +51,29 @@
 </head>
 <body class="dark">
   <header>
-    <h1>💻 PC Builder Helper</h1>
-    <nav>
-      <a href="build.html">Start Build</a>
-      <a href="upgrade.html">Upgrade My PC</a>
-      <a href="tools.html">Tools & Recommendations</a>
-    </nav>
+    <h1>PPP - PC Parts Picker</h1>
   </header>
   <main>
     <div id="regionSection">
       <h2>Where are you from?</h2>
-      <button onclick="setRegion('Europe')">Europe</button>
-      <button onclick="setRegion('North America')">North America</button>
-      <button onclick="setRegion('South America')">South America</button>
-      <button onclick="setRegion('Asia')">Asia</button>
+      <button onclick="selectRegion('Europe')">Europe</button>
+      <button onclick="selectRegion('North America')">North America</button>
+      <button onclick="selectRegion('South America')">South America</button>
+      <button onclick="selectRegion('Asia')">Asia</button>
     </div>
 
-    <div id="purposeSection" class="hidden">
+    <div id="nextStep" class="hidden">
       <h2>What do you want to do?</h2>
-      <button onclick="handleChoice('upgrade')">Upgrade My Existing PC</button>
-      <button onclick="handleChoice('build')">I Want to Build a New Rig</button>
+      <button onclick="window.location.href='upgrade.html'">Upgrade My Existing PC</button>
+      <button onclick="window.location.href='build.html'">Build a New PC</button>
     </div>
   </main>
 
   <script>
-    function setRegion(region) {
+    function selectRegion(region) {
       sessionStorage.setItem('region', region);
       document.getElementById('regionSection').classList.add('hidden');
-      document.getElementById('purposeSection').classList.remove('hidden');
-    }
-
-    function handleChoice(choice) {
-      if (choice === 'upgrade') {
-        window.location.href = 'upgrade.html';
-      } else {
-        window.location.href = 'build.html';
-      }
+      document.getElementById('nextStep').classList.remove('hidden');
     }
   </script>
 </body>
