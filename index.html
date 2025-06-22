@@ -41,6 +41,10 @@
       padding: 2rem;
       text-align: center;
     }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
     button {
       margin: 1rem;
       padding: 1rem 2rem;
@@ -70,33 +74,34 @@
     </nav>
   </header>
   <main>
-    <h2>What do you want to do?</h2>
-    <button onclick="handleChoice('upgrade')">Upgrade My Existing PC</button>
-    <button onclick="nextStep()">I Want to Build a New Rig</button>
+    <div id="regionSection">
+      <h2>Where are you from?</h2>
+      <button onclick="setRegion('Europe')">Europe</button>
+      <button onclick="setRegion('North America')">North America</button>
+      <button onclick="setRegion('South America')">South America</button>
+      <button onclick="setRegion('Asia')">Asia</button>
+    </div>
 
-    <div id="usecaseSection" class="hidden">
-      <h3>What will you use your new PC for?</h3>
-      <button onclick="handleUseCase('gaming')">Gaming</button>
-      <button onclick="handleUseCase('streaming')">Streaming</button>
-      <button onclick="handleUseCase('work')">Work / Study</button>
-      <button onclick="handleUseCase('editing')">Video Editing</button>
+    <div id="purposeSection" class="hidden">
+      <h2>What do you want to do?</h2>
+      <button onclick="handleChoice('upgrade')">Upgrade My Existing PC</button>
+      <button onclick="handleChoice('build')">I Want to Build a New Rig</button>
     </div>
   </main>
 
   <script>
+    function setRegion(region) {
+      sessionStorage.setItem('region', region);
+      document.getElementById('regionSection').classList.add('hidden');
+      document.getElementById('purposeSection').classList.remove('hidden');
+    }
+
     function handleChoice(choice) {
       if (choice === 'upgrade') {
         window.location.href = 'upgrade.html';
+      } else {
+        window.location.href = 'build.html';
       }
-    }
-
-    function nextStep() {
-      document.getElementById('usecaseSection').classList.remove('hidden');
-    }
-
-    function handleUseCase(type) {
-      sessionStorage.setItem('usecase', type);
-      window.location.href = 'build.html';
     }
   </script>
 </body>
