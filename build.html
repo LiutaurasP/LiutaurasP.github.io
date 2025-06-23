@@ -123,7 +123,7 @@
     </nav>
   </header>
   <main>
-    <section class="intro">
+    <section class="intro" id="questionSection">
       <h2>What will you use your PC for?</h2>
       <form id="questionnaire">
         <label><input type="radio" name="usecase" value="gaming" checked> Gaming</label><br>
@@ -158,6 +158,7 @@
     const compatibilityCheck = document.getElementById("compatibilityCheck");
     const performanceEstimate = document.getElementById("performanceEstimate");
     const comparisonBox = document.getElementById("comparison");
+    const questionSection = document.getElementById("questionSection");
 
     let userUseCase = "gaming";
     let currentBuild = [];
@@ -176,7 +177,7 @@
     questionnaire.addEventListener('submit', function(e) {
       e.preventDefault();
       userUseCase = document.querySelector('input[name="usecase"]:checked').value;
-      questionnaire.style.display = 'none';
+      questionSection.style.display = 'none'; // ← hide the section completely
       buildPlanner.style.display = 'block';
       generateParts(budgetSlider.value);
     });
