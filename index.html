@@ -1,80 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PC Builder Helper</title>
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #1a1a1a;
-      color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #262626;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    }
-    header h1 {
-      margin: 0;
-      color: #00ffc8;
-      font-size: 1.5rem;
-    }
-    main {
-      padding: 2rem;
-      text-align: center;
-    }
-    button {
-      margin: 1rem;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background-color: #00ffc8;
-      color: #000;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background-color: #00e6b8;
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta charset="UTF-8">
+    <title>good things to come</title>
+    <link rel = "stylesheet" href="style.css">
 </head>
-<body class="dark">
-  <header>
-    <h1>PCB - PC Builder</h1>
-  </header>
-  <main>
-    <div id="regionSection">
-      <h2>Where are you from?</h2>
-      <button onclick="selectRegion('Europe')">Europe</button>
-      <button onclick="selectRegion('North America')">North America</button>
-      <button onclick="selectRegion('South America')">South America</button>
-      <button onclick="selectRegion('Asia')">Asia</button>
-    </div>
 
-    <div id="nextStep" class="hidden">
-      <h2>What do you want to do?</h2>
-      <button onclick="window.location.href='upgrade.html'">Upgrade My Existing PC</button>
-      <button onclick="window.location.href='build.html'">Build a New PC</button>
-    </div>
-  </main>
 
-  <script>
-    function selectRegion(region) {
-      sessionStorage.setItem('region', region);
-      document.getElementById('regionSection').classList.add('hidden');
-      document.getElementById('nextStep').classList.remove('hidden');
-    }
-  </script>
+
+<body>
+
+
+<img id=img src="center.png" alt="Eye-center"
+width="666"
+height="666"
+>;
+    <script src="js.js"></script>
+
+
 </body>
+
+
 </html>
